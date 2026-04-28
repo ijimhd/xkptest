@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="el">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="xkpfoto">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Xkpfoto</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preload"
+              href="/fonts/PlayfairDisplay-ExtraBold.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+
+        <link rel="preload"
+              href="/fonts/SourceSans3-Regular.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+        <link rel="icon" type="image/svg+xml" href="/jpg/assets/favicon.svg" />
+        <script defer src="/js/dropdown.js"></script>
+        <script src="/js/script.js"></script>
+    </head>
+    <body>
+        <div class="background" style="position: relative; overflow: hidden;">
+            <picture>
+                <source 
+                    srcset="https://visionary-panda-cd546a.netlify.app/.netlify/images?url=/jpg/assets/home-mobile.webp&w=800&fm=webp&q=100" 
+                    media="(max-width: 899px)">
+                
+                <source 
+                    srcset="https://visionary-panda-cd546a.netlify.app/.netlify/images?url=/jpg/assets/home.webp&w=1920&fm=webp&q=100" 
+                    media="(min-width: 900px)">
+
+                <img 
+                    src="https://visionary-panda-cd546a.netlify.app/.netlify/images?url=/jpg/assets/home.webp&w=1920&fm=webp&q=100" 
+                    alt="" 
+                    role="presentation"
+                    fetchpriority="high"
+                    loading="eager"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+            </picture>
+            <div class="header-container">
+                <a class="header-logo-link" href="./index.html">
+                    <img class="header-logo" src="./jpg/assets/header-logo.png" alt="Xkpfoto logo">
+                </a>
+                
+                <button class="mobile-menu-btn" id="menu-toggle" aria-label="Open Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-list">
+                    <li><a class="nav-link nav-item" href="./index.html">HOME</a></li>      
+                    <li><a class="nav-link nav-item" href="./pages/football.html">FOOTBALL</a></li>
+                    <li><a class="nav-link nav-item" href="./pages/basketball.html">BASKETBALL</a></li>
+                    <li><div class="dropdown-container" id="servicesDropdown">
+                        <a href="#" class="nav-link">CONTACT ▾</a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <a href="mailto:harys.karanikolos@gmail.com">Email</a>
+                                <a href="https://www.instagram.com/xkpfoto/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            </div> 
+                        </div>
+                    </div></li>
+                </ul>
+            </div>
+            <div class="hero-text">
+                <p class="hero-title">SPORTS</p>
+                <p class="hero-title">PORTFOLIO</p>
+            </div>
+        </div>
+        <div class="sports-categories content">
+            <div class="football-container container">
+                <a href="./pages/football.html">
+                    <picture>
+                        <!-- Image for mobile -->
+                        <source srcset="/jpg/assets/champions-mobile-menu.webp" media="(max-width: 900px)" class="image">
+                        <!-- Image for desktop -->
+                        <source srcset="/jpg/assets/champions-desktop.webp" media="(min-width: 899px)" class="image">
+                        <!-- Fallback (for browsers that don’t support <picture>) -->
+                        <img src="/jpg/assets/champions-mobile-menu.webp" alt="Responsive image" class="image">
+                    </picture>
+                    <div class="overlay">
+                        <div class="football-text">Football</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="basketball-container container">
+                <a href="./pages/basketball.html">
+                    <picture>
+                        <!-- Image for mobile -->
+                        <source srcset="/jpg/assets/champions-mobile-menu.webp" media="(max-width: 900px)" class="image">
+                        <!-- Image for desktop -->
+                        <source srcset="/jpg/assets/champions-desktop.webp" media="(min-width: 899px)" class="image">
+                        <!-- Fallback (for browsers that don’t support <picture>) -->
+                        <img src="/jpg/assets/champions-mobile-menu.webp" alt="Responsive image" class="image">
+                    </picture>
+                    <div class="overlay">
+                        <div class="football-text">Basketball</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

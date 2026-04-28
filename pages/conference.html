@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="el">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="xkpfoto">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Xkpfoto</title>
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="preload"
+              href="../fonts/PlayfairDisplay-ExtraBold.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+
+        <link rel="preload"
+              href="../fonts/SourceSans3-Regular.woff2"
+              as="font"
+              type="font/woff2"
+              crossorigin>
+        <link rel="icon" type="image/svg+xml" href="../jpg//assetsfavicon.svg" />
+        <script defer src="/js/dropdown.js"></script>
+    </head>
+    <body>
+        <div class="header-container">
+                <a class="header-logo-link" href="../index.html">
+                    <img class="header-logo" src="../jpg/assets/header-logo.png" alt="Xkpfoto logo">
+                </a>
+                <input type="checkbox" id="sidebar-active">
+                <label for="sidebar-active" class="open-sidebar-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+                </label>
+                <label id="overlay" for="sidebar-active"></label>
+                <div class="links-container">
+                    <label for="sidebar-active" class="close-sidebar-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </label>          
+                    <a class="nav-link nav-item" href="../index.html">HOME</a>
+                    <a class="nav-link nav-item" href="./football.html">FOOTBALL</a>
+                    <a class="nav-link nav-item" href="./basketball.html">BASKETBALL</a>
+                    <div class="dropdown-container" id="servicesDropdown">
+                        <a href="#" class="nav-link">CONTACT ▾</a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <a href="mailto:harys.karanikolos@gmail.com">Email</a>
+                                <a href="https://www.instagram.com/xkpfoto/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="gallery-wrapper">
+          <div id="gallery" class="gallery"></div>
+        </div>
+
+        <div id="lightbox" class="lightbox hidden">
+          <button class="lightbox-close">&times;</button>
+        
+          <!-- wrapper for image + arrows -->
+          <div class="lightbox-content">
+            <img id="lightbox-img" alt="">
+            <div class="lightbox-arrows">
+              <button class="lightbox-nav prev">&#10094;</button>
+              <button class="lightbox-nav next">&#10095;</button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <script src="../js/football/conference/gallery.js"></script>
+        <script src="gallery.js"></script>
+        <script>
+        // ===== gallery.js =====
+
+// DOM elements
+const gallery = document.getElementById("gallery");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".lightbox-close");
+const prevBtn = document.querySelector(".lightbox-nav.prev");
+const nextBtn = document.querySelector(".lightbox-nav.next");
+
+let shuffled = [];
+let currentIndex = 0;
+
+// ----- HELPER FUNCTIONS -----
+
+// Shuffle array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function netlifyImage(src, width) {
+  // Adding &fm=webp tells Netlify to convert the image on the fly
+  return `/.netlify/images?url=${encodeURIComponent(src)}&w=${width}&fm=webp`;
+}
+
+// ----- LIGHTBOX FUNCTIONS -----
+function openLightbox(index) {
+  currentIndex = index;
+  const src = shuffled[currentIndex];
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  // 1. Initial State: Show lightbox and lock scroll
+  lightbox.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  // 2. Add Blur Styling (matching the gallery grid)
+  lightboxImg.style.filter = "blur(10px)";
+  lightboxImg.style.transition = "filter 0.4s ease-in-out";
+
+  if (isMobile) {
+    // Mobile: Just load the 800px version
+    lightboxImg.src = netlifyImage(src, 800);
+    lightboxImg.onload = () => {
+      lightboxImg.style.filter = "none";
+    };
+    return;
+  }
+
+  // 3. Desktop: Load 800px version first as a "preview"
+  // This is likely already in the browser cache, so it's instant
+  lightboxImg.src = netlifyImage(src, 800);
+
+  // 4. Load High-Res in the background
+  const highRes = new Image();
+  highRes.src = netlifyImage(src, 1600);
+  highRes.onload = () => {
+    // Switch to high-res and clear the blur
+    lightboxImg.src = highRes.src;
+    lightboxImg.style.filter = "none";
+  };
+}
+
+function closeLightbox() {
+  lightbox.classList.add("hidden");
+  // Clear the src and the filter so it's fresh for the next open
+  lightboxImg.src = "";
+  lightboxImg.style.filter = "none"; 
+  document.body.style.overflow = "";
+}
+
+function showNext() {
+  currentIndex = (currentIndex + 1) % shuffled.length;
+  openLightbox(currentIndex);
+}
+
+function showPrev() {
+  currentIndex = (currentIndex - 1 + shuffled.length) % shuffled.length;
+  openLightbox(currentIndex);
+}
+
+// ----- EVENT LISTENERS -----
+
+// Close button
+closeBtn.addEventListener("click", closeLightbox);
+
+// Click outside image closes
+lightbox.addEventListener("click", e => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+// Arrow buttons
+nextBtn.addEventListener("click", showNext);
+prevBtn.addEventListener("click", showPrev);
+
+// Keyboard navigation
+document.addEventListener("keydown", e => {
+  if (lightbox.classList.contains("hidden")) return;
+  if (e.key === "ArrowRight") showNext();
+  if (e.key === "ArrowLeft") showPrev();
+  if (e.key === "Escape") closeLightbox();
+});
+
+// ----- MOBILE SWIPE -----
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener("touchstart", e => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener("touchend", e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = touchEndX - touchStartX;
+
+  // Minimum distance to qualify as a swipe
+  if (Math.abs(diff) < 40) return;
+
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  if (diff > 0) {
+    // Swipe right → previous
+    if (isMobile) {
+      // MOBILE: do not wrap around
+      if (currentIndex > 0) showPrev();
+    } else {
+      showPrev(); // desktop can wrap
+    }
+  } else {
+    // Swipe left → next
+    if (isMobile) {
+      // MOBILE: do not wrap around
+      if (currentIndex < shuffled.length - 1) showNext();
+    } else {
+      showNext(); // desktop can wrap
+    }
+  }
+}
+
+
+// ----- GALLERY INITIALIZATION -----
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if the 'images' array exists from the gallery-*.js file
+  if (typeof images === 'undefined' || !images.length) {
+    console.error("No images array found. Check your script paths.");
+    return;
+  }
+
+  // Shuffle a copy of the images
+  shuffled = shuffleArray([...images]);
+
+  const fragment = document.createDocumentFragment();
+
+  shuffled.forEach((src, index) => {
+    const img = document.createElement("img");
+    
+    // 1. FAST LOAD: Show a tiny 20px version immediately
+    img.src = netlifyImage(src, 20); 
+    
+    // 2. STYLING: Add the blur and the fade transition
+    img.style.filter = "blur(15px)";
+    img.style.transition = "filter 0.6s ease-in-out";
+    img.style.cursor = "zoom-in";
+    img.className = "w-full h-auto rounded-lg shadow-md object-cover";
+    
+    // 3. RESPONSIVE: Tell the browser which sizes are available
+    img.srcset = [400, 800, 1200, 1600]
+      .map(w => `${netlifyImage(src, w)} ${w}w`)
+      .join(", ");
+    
+    // Match your grid layout (30vw for desktop, 95vw for mobile)
+    img.sizes = "(max-width: 768px) 95vw, 30vw";
+    img.loading = "lazy";
+
+    // 4. SHARPEN: When the real image is ready, remove the blur
+    img.onload = () => {
+      // If the current src is just the 20px placeholder, don't unblur yet
+      if (img.naturalWidth > 20) {
+        img.style.filter = "blur(0)";
+      }
+    };
+
+    img.addEventListener("click", () => openLightbox(index));
+    fragment.appendChild(img);
+  });
+
+  // Clear existing content and append the new images
+  gallery.innerHTML = "";
+  gallery.appendChild(fragment);
+});
+
+        </script>
+    </body>
+</html>
