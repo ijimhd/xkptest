@@ -433,6 +433,16 @@ a:hover{
 
   .header-container{
     padding: 2vh 8vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: transparent;
+  }
+
+  .home-carousel-wrapper{
+    min-height: 100vh;
   }
 
   .header-container{
