@@ -31,7 +31,7 @@ body{
 .carousel-track {
   display: flex;
   width: max-content;
-  animation: scroll-left 120s linear infinite;
+  animation: scroll-left 500s linear infinite;
 }
 
 .carousel-track:hover {
