@@ -211,8 +211,8 @@ a:hover{
 
 @media (max-width: 768px) {
     .home-carousel {
-        width: 95vw;
-        height: 80vh;
+        width: 80vw;
+        height: 70vh;
         max-height: none;
     }
 
