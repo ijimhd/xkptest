@@ -22,26 +22,16 @@
         <script src="/js/script.js"></script>
         <style>
             .home-carousel-wrapper {
-                overflow: hidden;
                 width: 100%;
                 padding: 2rem 0;
-            }
-
-            .carousel-track {
-                display: flex;
-                width: max-content;
-                animation: scroll-left 120s linear infinite;
-            }
-
-            .carousel-track:hover {
-                animation-play-state: paused;
-            }
-
-            .carousel-item {
-                width: 100vw;
                 display: flex;
                 justify-content: center;
-                flex-shrink: 0;
+            }
+
+            .home-carousel {
+                position: relative;
+                width: 80vw;
+                max-height: 70vh;
             }
 
             .carousel-img {
@@ -50,11 +40,17 @@
                 max-height: 70vh;
                 object-fit: cover;
                 border-radius: 8px;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
             }
 
-            @keyframes scroll-left {
-                from { transform: translateX(0); }
-                to { transform: translateX(-50%); }
+            .carousel-img.active {
+                opacity: 1;
+                position: relative;
             }
         </style>
     </head>
@@ -167,28 +163,29 @@
           const shuffled = shuffleArray([...images]);
           const carousel = document.getElementById("home-carousel");
 
-          const track = document.createElement("div");
-          track.className = "carousel-track";
-
-          // Duplicate list for seamless infinite loop
-          [...shuffled, ...shuffled].forEach(src => {
-            const item = document.createElement("div");
-            item.className = "carousel-item";
-
+          const imgEls = shuffled.map((src, i) => {
             const img = document.createElement("img");
             img.src = netlifyImage(src, 1600);
             img.srcset = [800, 1200, 1600, 2000]
               .map(w => `${netlifyImage(src, w)} ${w}w`)
               .join(", ");
             img.sizes = "80vw";
-            img.loading = "lazy";
+            img.loading = i === 0 ? "eager" : "lazy";
             img.className = "carousel-img";
-
-            item.appendChild(img);
-            track.appendChild(item);
+            if (i === 0) img.classList.add("active");
+            carousel.appendChild(img);
+            return img;
           });
 
-          carousel.appendChild(track);
+          let current = 0;
+          const intervalMs = 4000; // time each image stays visible
+
+          setInterval(() => {
+            const next = (current + 1) % imgEls.length;
+            imgEls[current].classList.remove("active");
+            imgEls[next].classList.add("active");
+            current = next;
+          }, intervalMs);
         })();
         </script>
     </body>
