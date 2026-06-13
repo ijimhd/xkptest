@@ -21,6 +21,52 @@
         <script defer src="/js/dropdown.js"></script>
         <script src="/js/script.js"></script>
     </head>
+    <div class="home-carousel-wrapper">
+  <div id="home-carousel" class="home-carousel"></div>
+</div>
+
+<script src="/js/football/champions/gallery.js"></script>
+<script>
+(function() {
+  function netlifyImage(src, width) {
+    return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp`;
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  if (typeof images === 'undefined' || !images.length) {
+    console.error("No images array found for home carousel.");
+    return;
+  }
+
+  const shuffled = shuffleArray([...images]);
+  const carousel = document.getElementById("home-carousel");
+
+  const track = document.createElement("div");
+  track.className = "carousel-track";
+
+  // Duplicate list for seamless infinite loop
+  [...shuffled, ...shuffled].forEach(src => {
+    const img = document.createElement("img");
+    img.src = netlifyImage(src, 400);
+    img.srcset = [400, 800, 1200]
+      .map(w => `${netlifyImage(src, w)} ${w}w`)
+      .join(", ");
+    img.sizes = "300px";
+    img.loading = "lazy";
+    img.className = "carousel-img";
+    track.appendChild(img);
+  });
+
+  carousel.appendChild(track);
+})();
+</script>
     <body>
         <div class="background" style="position: relative; overflow: hidden;">
             <picture>
@@ -44,7 +90,6 @@
                 <a class="header-logo-link" href="./index.html">
                     <img class="header-logo" src="./jpg/assets/header-logo.png" alt="Xkpfoto logo">
                 </a>
-                
                 <button class="mobile-menu-btn" id="menu-toggle" aria-label="Open Menu">
                     <span></span>
                     <span></span>

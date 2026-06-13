@@ -28,6 +28,36 @@ body{
   font-display: swap;
 }
 
+.home-carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll-left 60s linear infinite;
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.carousel-img {
+  height: 250px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .header-container{
   display: flex;
   align-items: center;
@@ -481,11 +511,6 @@ a:hover{
     position: relative; /* Stacks it under the CONTACT link */
     padding-top: 0;
   }
-
-  .dropdown-container{
-    margin-block: 0.7em;
-  }
-
 
   .dropdown-menu a{
     font-size:1em;
