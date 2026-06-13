@@ -20,53 +20,41 @@
         <link rel="icon" type="image/svg+xml" href="/jpg/assets/favicon.svg" />
         <script defer src="/js/dropdown.js"></script>
         <script src="/js/script.js"></script>
+        <style>
+            .home-carousel-wrapper {
+                overflow: hidden;
+                width: 100%;
+                padding: 2rem 0;
+                display: flex;
+                justify-content: center;
+            }
+
+            .carousel-track {
+                display: flex;
+                gap: 1rem;
+                width: max-content;
+                animation: scroll-left 120s linear infinite;
+            }
+
+            .carousel-track:hover {
+                animation-play-state: paused;
+            }
+
+            .carousel-img {
+                width: 80vw;
+                height: auto;
+                max-height: 70vh;
+                object-fit: cover;
+                border-radius: 8px;
+                flex-shrink: 0;
+            }
+
+            @keyframes scroll-left {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+            }
+        </style>
     </head>
-    <div class="home-carousel-wrapper">
-  <div id="home-carousel" class="home-carousel"></div>
-</div>
-
-<script src="/js/football/champions/gallery.js"></script>
-<script>
-(function() {
-  function netlifyImage(src, width) {
-    return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp`;
-  }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
-  if (typeof images === 'undefined' || !images.length) {
-    console.error("No images array found for home carousel.");
-    return;
-  }
-
-  const shuffled = shuffleArray([...images]);
-  const carousel = document.getElementById("home-carousel");
-
-  const track = document.createElement("div");
-  track.className = "carousel-track";
-
-  // Duplicate list for seamless infinite loop
-  [...shuffled, ...shuffled].forEach(src => {
-    const img = document.createElement("img");
-    img.src = netlifyImage(src, 400);
-    img.srcset = [400, 800, 1200]
-      .map(w => `${netlifyImage(src, w)} ${w}w`)
-      .join(", ");
-    img.sizes = "300px";
-    img.loading = "lazy";
-    img.className = "carousel-img";
-    track.appendChild(img);
-  });
-
-  carousel.appendChild(track);
-})();
-</script>
     <body>
         <div class="background" style="position: relative; overflow: hidden;">
             <picture>
@@ -148,5 +136,52 @@
                 </a>
             </div>
         </div>
+
+        <div class="home-carousel-wrapper">
+          <div id="home-carousel" class="home-carousel"></div>
+        </div>
+
+        <script src="/js/football/champions/gallery.js"></script>
+        <script>
+        (function() {
+          function netlifyImage(src, width) {
+            return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp&q=90`;
+          }
+
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+
+          if (typeof images === 'undefined' || !images.length) {
+            console.error("No images array found for home carousel.");
+            return;
+          }
+
+          const shuffled = shuffleArray([...images]);
+          const carousel = document.getElementById("home-carousel");
+
+          const track = document.createElement("div");
+          track.className = "carousel-track";
+
+          // Duplicate list for seamless infinite loop
+          [...shuffled, ...shuffled].forEach(src => {
+            const img = document.createElement("img");
+            img.src = netlifyImage(src, 1600);
+            img.srcset = [800, 1200, 1600, 2000]
+              .map(w => `${netlifyImage(src, w)} ${w}w`)
+              .join(", ");
+            img.sizes = "80vw";
+            img.loading = "lazy";
+            img.className = "carousel-img";
+            track.appendChild(img);
+          });
+
+          carousel.appendChild(track);
+        })();
+        </script>
     </body>
 </html>
