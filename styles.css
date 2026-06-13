@@ -28,31 +28,6 @@ body{
   font-display: swap;
 }
 
-.carousel-track {
-  display: flex;
-  width: max-content;
-  animation: scroll-left 500s linear infinite;
-}
-
-.carousel-track:hover {
-  animation-play-state: paused;
-}
-
-.carousel-item {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.carousel-img {
-  width: 80vw;
-  height: auto;
-  max-height: 70vh;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
 .header-container{
   display: flex;
   align-items: center;
@@ -64,10 +39,6 @@ body{
   display: flex;
   align-items: center;
   gap: 1em;
-}
-
-.header-logo{
-  width:100px;
 }
 
 .header-logo-link{
@@ -201,33 +172,9 @@ a:hover{
   color: rgb(98, 98, 98);
 }
 
-.background {
-  /* Remove the background-image line */
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* Keep your other layout styles */
-}
-
 .home-page{
   position: relative;
   text-align: center;
-}
-
-.hero-text{
-  display: flex;
-  gap: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5em;
-}
-
-.hero-title{
-  font-family: "FontOne", serif;
 }
 
 .sports-container{
@@ -419,13 +366,6 @@ a:hover{
 
   .header-container{
     padding: 2vh 8vw;
-  }
-
-  .hero-text{
-    align-items: center;
-    padding-top: 20vw;
-    font-size: 8vw;
-    gap: 2vw;
   }
 
   .header-container{
