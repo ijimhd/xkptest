@@ -40,7 +40,7 @@ body{
   display: flex;
   gap: 1rem;
   width: max-content;
-  animation: scroll-left 60s linear infinite;
+  animation: scroll-left 300s linear infinite;
 }
 
 .carousel-track:hover {
