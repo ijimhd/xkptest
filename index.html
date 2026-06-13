@@ -103,7 +103,19 @@
           const shuffled = shuffleArray([...images]);
           const carousel = document.getElementById("home-carousel");
 
-          const imgEls = shuffled.map((src, i) => {
+          const imgEls = [];
+          const bgEls = [];
+
+          shuffled.forEach((src, i) => {
+            const bg = document.createElement("img");
+            bg.src = netlifyImage(src, 100);
+            bg.loading = "lazy";
+            bg.className = "carousel-bg";
+            bg.alt = "";
+            if (i === 0) bg.classList.add("active");
+            carousel.appendChild(bg);
+            bgEls.push(bg);
+
             const img = document.createElement("img");
             img.src = netlifyImage(src, 1600);
             img.srcset = [800, 1200, 1600, 2000]
@@ -114,7 +126,7 @@
             img.className = "carousel-img";
             if (i === 0) img.classList.add("active");
             carousel.appendChild(img);
-            return img;
+            imgEls.push(img);
           });
 
           let current = 0;
@@ -124,6 +136,8 @@
             const next = (current + 1) % imgEls.length;
             imgEls[current].classList.remove("active");
             imgEls[next].classList.add("active");
+            bgEls[current].classList.remove("active");
+            bgEls[next].classList.add("active");
             current = next;
           }, intervalMs);
         })();
