@@ -28,23 +28,21 @@ body{
   font-display: swap;
 }
 
-.home-carousel-wrapper {
-  overflow: hidden;
-  width: 100%;
-  padding: 2rem 0;
-  display: flex;
-  justify-content: center;
-}
-
 .carousel-track {
   display: flex;
-  gap: 1rem;
   width: max-content;
-  animation: scroll-left 300s linear infinite;
+  animation: scroll-left 120s linear infinite;
 }
 
 .carousel-track:hover {
   animation-play-state: paused;
+}
+
+.carousel-item {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .carousel-img {
@@ -53,12 +51,6 @@ body{
   max-height: 70vh;
   object-fit: cover;
   border-radius: 8px;
-  flex-shrink: 0;
-}
-
-@keyframes scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 
 .header-container{
