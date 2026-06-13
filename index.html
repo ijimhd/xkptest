@@ -47,9 +47,6 @@
         <div class="home-carousel-wrapper">
           <div id="home-carousel" class="home-carousel"></div>
         </div>
-
-        <script src="/js/football/champions/gallery.js"></script>
-        
         <div class="sports-categories content">
             <div class="football-container container">
                 <a href="./pages/football.html">
@@ -83,52 +80,53 @@
                 </a>
             </div>
         </div>
+        <script src="/js/football/champions/gallery.js"></script>
         <script>
-            (function() {
-            function netlifyImage(src, width) {
-                return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp&q=90`;
+        (function() {
+          function netlifyImage(src, width) {
+            return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp&q=90`;
+          }
+
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
+          }
 
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
+          if (typeof images === 'undefined' || !images.length) {
+            console.error("No images array found for home carousel.");
+            return;
+          }
 
-            if (typeof images === 'undefined' || !images.length) {
-                console.error("No images array found for home carousel.");
-                return;
-            }
+          const shuffled = shuffleArray([...images]);
+          const carousel = document.getElementById("home-carousel");
 
-            const shuffled = shuffleArray([...images]);
-            const carousel = document.getElementById("home-carousel");
+          const imgEls = shuffled.map((src, i) => {
+            const img = document.createElement("img");
+            img.src = netlifyImage(src, 1600);
+            img.srcset = [800, 1200, 1600, 2000]
+              .map(w => `${netlifyImage(src, w)} ${w}w`)
+              .join(", ");
+            img.sizes = "80vw";
+            img.loading = i === 0 ? "eager" : "lazy";
+            img.className = "carousel-img";
+            if (i === 0) img.classList.add("active");
+            carousel.appendChild(img);
+            return img;
+          });
 
-            const imgEls = shuffled.map((src, i) => {
-                const img = document.createElement("img");
-                img.src = netlifyImage(src, 1600);
-                img.srcset = [800, 1200, 1600, 2000]
-                .map(w => `${netlifyImage(src, w)} ${w}w`)
-                .join(", ");
-                img.sizes = "80vw";
-                img.loading = i === 0 ? "eager" : "lazy";
-                img.className = "carousel-img";
-                if (i === 0) img.classList.add("active");
-                carousel.appendChild(img);
-                return img;
-            });
+          let current = 0;
+          const intervalMs = 4000; // time each image stays visible
 
-            let current = 0;
-            const intervalMs = 4000; // time each image stays visible
-
-            setInterval(() => {
-                const next = (current + 1) % imgEls.length;
-                imgEls[current].classList.remove("active");
-                imgEls[next].classList.add("active");
-                current = next;
-            }, intervalMs);
-            })();
+          setInterval(() => {
+            const next = (current + 1) % imgEls.length;
+            imgEls[current].classList.remove("active");
+            imgEls[next].classList.add("active");
+            current = next;
+          }, intervalMs);
+        })();
         </script>
     </body>
 </html>
