@@ -230,6 +230,7 @@ a:hover{
         object-fit: contain;
         max-height: none;
         z-index: 1;
+        border-radius: 0;
     }
 
     .carousel-bg {
