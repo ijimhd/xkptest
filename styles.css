@@ -197,6 +197,7 @@ a:hover{
     object-fit: cover;
     border-radius: 8px;
     display: block;
+    background-color: white;
     position: absolute;
     top: 0;
     left: 0;
