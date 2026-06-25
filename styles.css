@@ -6,8 +6,8 @@
 }
 
 body{
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   font-size: 23px;
   font-weight: 400;
 }
@@ -51,7 +51,7 @@ body{
     justify-content: space-between;
     align-items: center;
     background-color: #1a1a1a;
-    color: white;
+    color: black;
     padding: 0 5%;
     position: sticky;
     top: 0;
@@ -163,7 +163,7 @@ body{
 
 a{
   text-decoration: none;
-  color: white;
+  color: black;
   font-family: "FontTwo", sans-serif;
   font-weight: 400;
 }
