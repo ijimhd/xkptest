@@ -202,7 +202,7 @@ a:hover{
     left: 0;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
 }
 
 .carousel-img.active {

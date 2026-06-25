@@ -117,7 +117,8 @@
             bgEls.push(bg);
 
             const img = document.createElement("img");
-            img.src = netlifyImage(src, 1600);
+            const isMobile = window.matchMedia("(max-width: 900px)").matches;
+            img.src = netlifyImage(src, isMobile ? 800 : 1600);
             img.srcset = [800, 1200, 1600, 2000]
               .map(w => `${netlifyImage(src, w)} ${w}w`)
               .join(", ");
