@@ -115,7 +115,7 @@ body{
 
 /* The container for the links */
 .dropdown-content {
-  background-color: #1a1a1a;
+  background-color: rgb(225, 225, 225);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
@@ -492,7 +492,8 @@ a:hover{
       position: fixed;
       top: 0;
       right: -100%; /* Hidden off-screen to the right */
-      background-color: black;
+      background-color: white;
+      color:black;
       width: 100%; /* Full screen width */
       height: 100vh;
       flex-direction: column;
