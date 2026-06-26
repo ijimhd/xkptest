@@ -29,10 +29,17 @@
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-links" id="nav-list">
-                <li><a class="nav-link nav-item" href="./index.html">HOME</a></li>      
-                <li><a class="nav-link nav-item" href="./pages/football.html">FOOTBALL</a></li>
-                <li><a class="nav-link nav-item" href="./pages/basketball.html">BASKETBALL</a></li>
+            <ul class="nav-links" id="nav-list">      
+                <li><div class="dropdown-container" id="servicesDropdown">
+                    <a href="#" class="nav-link">SPORTS ▾</a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                            <a class="nav-link nav-item" href="./pages/football.html">FOOTBALL</a>
+                            <a class="nav-link nav-item" href="./pages/basketball.html">BASKETBALL</a>
+                        </div> 
+                    </div>
+                </div></li>
+                <li><a class="nav-link nav-item" href="./index.html">PUBLICATIONS</a></li>
                 <li><div class="dropdown-container" id="servicesDropdown">
                     <a href="#" class="nav-link">CONTACT ▾</a>
                     <div class="dropdown-menu">
@@ -42,10 +49,16 @@
                         </div> 
                     </div>
                 </div></li>
+                
             </ul>
         </div>
-        <div class="home-carousel-wrapper">
-          <div id="home-carousel" class="home-carousel"></div>
+        <div class="carousel">
+            <img src="./jpg/football/super/_DSC0264-min.jpg" class="active" alt="Slide 1">
+            <img src="./jpg/football/super/_DSC1954-Edit.jpg" alt="Slide 2">
+            <img src="./jpg/football/super/_DSC8760-min.jpg" alt="Slide 3">
+            <img src="./jpg/football/champions/_DSC6240-min.jpg" alt="Slide 4">
+            <img src="./jpg/football/conference/_DSC1312-min.jpg" alt="Slide 5">
+            <img src="./jpg/football/champions/_DSC9377.jpg" alt="Slide 6">
         </div>
         <div class="sports-categories content">
             <div class="football-container container">
@@ -83,64 +96,17 @@
         <script src="/js/football/champions/gallery.js"></script>
         <script>
         (function() {
-          function netlifyImage(src, width) {
-            return `/.netlify/images?url=/${encodeURIComponent(src)}&w=${width}&fm=webp&q=90`;
-          }
+            const images = document.querySelectorAll('.carousel img');
+            let currentIndex = 0;
 
-          function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [array[i], array[j]] = [array[j], array[i]];
+            function changeImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
             }
-            return array;
-          }
 
-          if (typeof images === 'undefined' || !images.length) {
-            console.error("No images array found for home carousel.");
-            return;
-          }
-
-          const shuffled = shuffleArray([...images]);
-          const carousel = document.getElementById("home-carousel");
-
-          const imgEls = [];
-          const bgEls = [];
-
-          shuffled.forEach((src, i) => {
-            const bg = document.createElement("img");
-            bg.src = netlifyImage(src, 100);
-            bg.loading = "lazy";
-            bg.className = "carousel-bg";
-            bg.alt = "";
-            if (i === 0) bg.classList.add("active");
-            carousel.appendChild(bg);
-            bgEls.push(bg);
-
-            const img = document.createElement("img");
-            const isMobile = window.matchMedia("(max-width: 900px)").matches;
-            img.src = netlifyImage(src, isMobile ? 800 : 1600);
-            img.srcset = [800, 1200, 1600, 2000]
-              .map(w => `${netlifyImage(src, w)} ${w}w`)
-              .join(", ");
-            img.sizes = "80vw";
-            img.loading = i === 0 ? "eager" : "lazy";
-            img.className = "carousel-img";
-            if (i === 0) img.classList.add("active");
-            carousel.appendChild(img);
-            imgEls.push(img);
-          });
-
-          let current = 0;
-          const intervalMs = 4000; // time each image stays visible
-
-          setInterval(() => {
-            const next = (current + 1) % imgEls.length;
-            imgEls[current].classList.remove("active");
-            imgEls[next].classList.add("active");
-            bgEls[current].classList.remove("active");
-            bgEls[next].classList.add("active");
-            current = next;
-          }, intervalMs);
+            // Change image every 3 seconds
+            setInterval(changeImage, 3000);
         })();
         </script>
     </body>
