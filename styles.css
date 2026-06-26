@@ -535,8 +535,8 @@ a:hover{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
-    gap: 2vw;
+    height: 90vh;
+    gap: 10vw;
   }
 
   .publication-links{
