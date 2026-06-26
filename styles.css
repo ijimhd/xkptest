@@ -286,7 +286,7 @@ a:hover{
 
 .leagues,
 .sports-categories{
-  display:none;
+  display:flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 3vw;
@@ -514,11 +514,6 @@ a:hover{
 
   .carousel{
     margin-inline: 10px;
-  }
-
-  .sports-categories{
-    display: flex;
-    flex-wrap: nowrap;
   }
 
   .gallery{
