@@ -358,6 +358,20 @@ a:hover{
   opacity: 0.7;
 }
 
+.publication-links{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8em;
+  margin-top: 2vh
+}
+
+.publication-links a{
+  font-family: system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 /* Mobile lightbox sizing */
 @media (max-width: 768px) {
   .lightbox img {
@@ -498,7 +512,7 @@ a:hover{
     padding: 10vh;
   }
   .image {
-    width: 45vw;
+    width: 70vw;
   }
 
   .overlay{
@@ -514,11 +528,25 @@ a:hover{
 
   .carousel{
     margin-inline: 10px;
+    height: 32vh;
+  }
+
+  .carousel-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    gap: 2vw;
+  }
+
+  .publication-links{
+    margin-top: 10vh;
+    align-items: flex-start;
   }
 
   .gallery{
     gap: 5vw;
-    margin-top: 8vw;
+    margin-top: 17vw;
   }
   .gallery-image{
     width: 90%;
@@ -530,7 +558,7 @@ a:hover{
   }
 
   .leagues{
-    margin-bottom: 13vw;
+    margin-block: 13vw;
   }
 
 }
